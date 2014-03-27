@@ -48,45 +48,46 @@
     void insertar_nodo_clientes(ListaClientes** lista,int llave, DatosCliente informacion){ 
       /**Crearemos variables del tipo struct nodo, y al auxiliar lo
           inicializaremos a semejanza del nodoCLiente**/
-      nodoCliente *aux, *iterador;
-      aux = malloc(sizeof(nodoCliente));
+	    	nodoCliente *aux, *iterador;
+	    	aux = malloc(sizeof(nodoCliente));
 
-      if( aux == NULL ){
-        return; 
-      }
+	    	if( aux == NULL ){
+	      		return; 
+	    	}
       /**Ahora le asignamos los valores que nos pasaron por referencia desde
         el inicio a nuestra variable auxiliar**/
-      aux -> datos = informacion;
-      aux -> id = llave;
-      aux -> ant = NULL;
-      aux -> sig = NULL;
-      aux -> headBien = NULL;
+	      	aux -> datos = informacion;
+	      	aux -> id = llave;
+	      	aux -> ant = NULL;
+	      	aux -> sig = NULL;
+	      	aux -> headBien = NULL;
 
       /**Si la el valor de lista headClientes es igual a NULL entonces igualar
         el valor con aux
         Si el valor de headCLientes id es igual a la llave dada, el valor
         siguiente del auxiliar será el actual HeadClientes, y  el valor
         del axiliar actual será igual al headClientes osea el anterior**/
-      if( (*lista) -> headClientes == NULL ){
-        (*lista) -> headClientes = aux;
-        return; 
-      }
-      if( (*lista) -> headClientes -> id == llave ){
-        aux -> sig = (*lista) -> headClientes;
-        (*lista) -> headClientes = aux;
-        return;
-      }
+      		if( (*lista) -> headClientes == NULL ){
+	        	(*lista) -> headClientes = aux;
+	        	return; 
+      		}
+      		if( (*lista) -> headClientes -> id == llave ){
+        		aux -> sig = (*lista) -> headClientes;
+        		(*lista) -> headClientes = aux;
+        		return;
+      		}
 
-      iterador = (*lista) -> headClientes;
+      		iterador = (*lista) -> headClientes;
 
-      while( iterador -> sig != NULL ){
-        iterador=iterador->sig;
-      }
+      		while( iterador -> sig != NULL ){
+        		iterador=iterador->sig;
+      		}
 
-      aux -> ant = iterador;
-      iterador -> sig = aux;
-      return;
+		    aux -> ant = iterador;
+		    iterador -> sig = aux;
+		    return;
     }
+
   //Consultar Lista de Clientes
     ListaClientes* consulta(){
       MYSQL *conexion;
@@ -96,7 +97,6 @@
       char *usuario = "root";
       char *pass = "1234";
       char *base = "casaempenio";
-
       conexion = mysql_init(NULL);
       mysql_real_connect(conexion,servidor,usuario,pass,base,0,NULL,0);
       char sentencia[100]="SELECT * from clientes ;";
@@ -106,18 +106,18 @@
       ListaClientes* lista1 = NULL;
       lista1 = crearListaClientes(lista1);
       if(R!=NULL){
-        COL = mysql_fetch_row(R);
-      while (COL != NULL){
-        int id;
-        char *ptr,*ptr2;
-        DatosCliente info;
-        ptr = COL[0];
-        ptr2 = COL[1];
-        id = atoi(ptr);
-        strcpy(info.nombre,ptr2);
-        insertar_nodo_clientes(&lista1,id,info);
-        COL = mysql_fetch_row(R);
-      }
+      	COL = mysql_fetch_row(R);
+	    while (COL != NULL){
+	        int id;
+	        char *ptr,*ptr2;
+	        DatosCliente info;
+	        ptr = COL[0];
+	        ptr2 = COL[1];
+	        id = atoi(ptr);
+	        strcpy(info.nombre,ptr2);
+	        insertar_nodo_clientes(&lista1,id,info);
+	        COL = mysql_fetch_row(R);
+	    }
       }else{
         puts("ADVERTENCIA: La base de datos se encuentra vacia"); 
       }
