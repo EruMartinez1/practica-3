@@ -1,4 +1,4 @@
-//Librerias que usaremos
+//Librerias que usaremos en este programa
 //MysqlClient lo usaremos para manejar la base de datos.
 #include <stdio.h>
 #include <stdlib.h>
